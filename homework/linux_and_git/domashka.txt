@@ -10,7 +10,7 @@ Linux
 9. mv *.txt linux_lecture
 10. echo "echo 'linux lecture'" > homework.sh
 11. cat homework.sh
-12. chmod o-wx homework.sh && cat homework.sh ((owner) current user)
+12. chmod o-rx homework.sh && cat homework.sh ((owner) current user)
 13. chmod o+rwx homework.sh
 13a. sh homework.sh // or ./homework.sh
 14. open homework.sh //and then write by hands, or seq 1 10 > homework.sh
