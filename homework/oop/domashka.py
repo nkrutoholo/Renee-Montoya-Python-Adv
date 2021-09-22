@@ -81,6 +81,10 @@ class Centaur(Human, Horse):
 
 c = Centaur()
 c.imagine()
+c.work()
+c.speak()
+c.study()
+c.run()
 
 # 2. Create two classes: Person, CellPhone, one for composition, another one for aggregation.
 
