@@ -31,6 +31,6 @@ def test_plant_get_by_director_id(mock_data, plant):
     assert 'id' in plant.get_plant_by_director_id(3)
 
 @patch('models.Plant.get_file_data')
-def test_plant_get_by_director_id(mock_data, plant):
+def test_plant_get_by_director_id_empty(mock_data, plant):
     mock_data.return_value = []
     assert plant.get_plant_by_director_id(3) is None
