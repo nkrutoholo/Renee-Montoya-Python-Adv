@@ -5,8 +5,10 @@ import json
 class Model(ABC):
     file = 'default.json'
 
+    # def _generate_dict(self):
+    #     return {field: getattr(self, field) for field in self.__dict__}
     def _generate_dict(self):
-        return {field: getattr(self, field) for field in self.__dict__}
+        return self.__dict__
 
     def save(self):
         object_in_dict_format = self._generate_dict()

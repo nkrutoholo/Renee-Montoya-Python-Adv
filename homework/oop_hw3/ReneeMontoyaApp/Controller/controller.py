@@ -22,12 +22,12 @@ class Controller:
     @staticmethod
     def display_menu():
         print("""Choose a menu item by number:
-              1. Add new Plant
-              2. Add new Employee
-              3. Get plant by id
-              4. Get employee by id
+        1. Add new Plant
+        2. Add new Employee
+        3. Get plant by id
+        4. Get employee by id
               
-              quit to exit""")
+        quit to exit""")
 
     def run(self):
         """Display menu and respond to choice"""
@@ -66,13 +66,13 @@ class Controller:
             # director_id = int(input("Director ID: "))
             director_email = input("Director_email: ")
             try:
-                Employee.search_email(director_email)
+                director_id = Employee.search_email(director_email)
+                plant = Plant(id, location, name, director_id)
+                plant.save()
+                print(f"New plant added and saved")
             except:
                 print("Email not found")
-                self.new_plant()
-            plant = Plant(id, location, name, director_email.id)
-            plant.save()
-            print(f"New plant added and saved")
+                return
 
     def new_employee(self):
         try:
@@ -105,7 +105,7 @@ class Controller:
             print(plant)
         except:
             print("There is no plant by this id")
-            self.get_plant_by_id()
+            return
 
     def get_employee_by_id(self):
         try:
@@ -118,7 +118,7 @@ class Controller:
             print(employee)
         except:
             print("There is no employee by this id")
-            self.get_employee_by_id()
+            return
 
     def quit(self):
         print("Bye")

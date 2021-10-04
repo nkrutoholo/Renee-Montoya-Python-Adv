@@ -13,7 +13,7 @@ class Employee(Model):
 
     @classmethod
     def search_email(cls, email):
-        for dict in cls.get_all():
-            if dict.email == email:
-                return dict
+        for el in cls.get_all():
+            if el['email'] == email:
+                return el['id']
         print("Not found email")
