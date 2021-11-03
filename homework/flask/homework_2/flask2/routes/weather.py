@@ -10,7 +10,7 @@ from flask import jsonify
 
 @app.route('/weather')
 def weather():
-    cities = re.split('%20| ', request.args.get('city'))
+    cities = re.split('%20| |,|.', request.args.get('city'))
     items = []
     for city in cities:
         response = requests.get(
