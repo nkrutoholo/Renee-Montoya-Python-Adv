@@ -1,5 +1,4 @@
-from flask import Flask, request, render_template
-# from calculator import Calculator
+from flask import Flask, render_template
 from result import Result
 
 # create app
@@ -23,6 +22,7 @@ def calculate(numb1, numb2, op):
         calc_res = Result(numb1, numb2).mult_res()
     else:
         calc_res = 'Wrong operation'
+    print(calc_res)
     return render_template('result.html', calc=calc_res)
 
 
