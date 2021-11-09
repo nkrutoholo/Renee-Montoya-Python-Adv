@@ -30,7 +30,7 @@ class PlantSingleResource(Resource):
         try:
             return Plant.get_by_id(id)
         except Exception:
-            return "Not Found", 404
+            return "Not Found plant error", 404
 
     def put(self, id):
         data = request.json
