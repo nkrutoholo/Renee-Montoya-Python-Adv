@@ -34,24 +34,4 @@ $(document).ready(function () {
             }
         });
     });
-
-
-   // $('.remove').click(function () {
-   //      const remove = $(this);
-   //      console.log(remove)
-   //      $.ajax({
-   //          type: 'PATCH',
-   //          url: "/api/v1/todos",
-   //          contentType: 'application/json;charset=UTF-8',
-   //          data: JSON.stringify({
-   //              'delete': remove.data('source')
-   //          }),
-   //          success: function (res) {
-   //              console.log(res.response);
-   //              location.reload();
-   //          },
-   //          error: function () {console.log('Error');}
-   //      });
-   //  });
-
 });
