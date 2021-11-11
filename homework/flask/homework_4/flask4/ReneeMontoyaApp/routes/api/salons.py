@@ -43,7 +43,7 @@ class SalonSingleResource(Resource):
     def delete(self, id):
         try:
             Salon.delete_by_id(id)
-            return "Deleted error", 204
+            return "Deleted", 204
         except Exception:
             return 'Single salon not found.', 404
 
