@@ -8,7 +8,7 @@ res = []
 results = {}
 
 regex_title = re.compile(r"(?:(?:(?:[А-ЩЬЮЯҐЄІЇа-щьюяґєії]+(?:(?:\-| {1,2}|, )))){1,8}[А-ЩЬЮЯҐЄІЇа-щьюяґєії]+)")
-regex_mail = re.compile(r"((?:(?:[А-ЩЬЮЯҐЄІЇа-щьюяґєії]+(?:(?:\-| |, )))){1,8}[А-ЩЬЮЯҐЄІЇа-щьюяґєії]+)\s+(?:([a-z_]+@vsau\.vin\.ua))\s*")
+regex_mail = re.compile(r"((?:[А-ЩЬЮЯҐЄІЇа-щьюяґєії\-,a\.\" ]+)+)\s+([a-zA-z_]+@vsau\.vin\.ua)")
 r = requests.get(URL)
 
 soup = BeautifulSoup(r.text, 'html.parser')
@@ -28,6 +28,7 @@ def list_of_titles(headline):
 
 def task1(res):
     articles = soup.find_all('p')
+
     # print(articles)
     for el in articles:
         res.extend(re.findall(r"((?:(?:[А-ЩЬЮЯҐЄІЇа-щьюяґєії]+(?:(?:\-| |, )))){1,8}[А-ЩЬЮЯҐЄІЇа-щьюяґєії]+)\s<b>(?:([a-z_]+@vsau\.vin\.ua))", str(el)))
@@ -46,11 +47,20 @@ def update_results_values(results):
     return results
 
 
+def clear_res(results):
+    for l in results.values():
+        for idx, el in enumerate(l):
+            if el == '\n':
+                l.pop(idx)
+    return results
+
+
 def task_asterisk(results):
     for p in soup.select('p'):
         results.setdefault(p.find_previous('h2').text, []).append(p.text)
     # print(results)
     results = update_results_values(results)
+    results = clear_res(results)
     print(results)
 
 
