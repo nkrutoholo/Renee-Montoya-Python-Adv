@@ -3,6 +3,7 @@ from app import db
 
 class Plant(db.Model):
     __tablename__ = "plants"
+
     id = db.Column(
         db.Integer,
         primary_key=True
@@ -27,6 +28,7 @@ class Plant(db.Model):
 
 class Employee(db.Model):
     __tablename__ = "employees"
+
     id = db.Column(
         db.Integer,
         primary_key=True
@@ -62,6 +64,7 @@ class Employee(db.Model):
 
 class MenuItem(db.Model):
     __tablename__ = 'menu_items'
+
     id = db.Column(
         db.Integer,
         primary_key=True
@@ -86,3 +89,39 @@ class MenuItem(db.Model):
             'name': self.name,
             'link': self.link,
         }
+
+
+class Salon(db.Model):
+    __tablename__ = "salon"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True
+    )
+    name = db.Column(
+        db.String(255),
+        nullable=False,
+    )
+    director_id = db.Column(
+        db.Integer,
+        nullable=False
+    )
+    city = db.Column(
+        db.String(255),
+        nullable=False,
+    )
+    address = db.Column(
+        db.String(255),
+        nullable=False,
+    )
+
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'director_id': self.director_id,
+            'city': self.city,
+            'address': self.address,
+        }
+

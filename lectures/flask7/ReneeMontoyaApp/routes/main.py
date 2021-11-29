@@ -7,7 +7,6 @@ from models import Plant, Employee
 def main():
      plants = Plant.query.all()
      employees = Employee.query.all()
-
      return render_template('index.html', plants=plants, employees=employees)
 
 

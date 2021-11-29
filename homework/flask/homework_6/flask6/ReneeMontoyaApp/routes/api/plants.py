@@ -24,10 +24,15 @@ class PlantSingleResource(Resource):
         plant = Plant.query.get(id)
         return plant.serialize
 
-    # def put(self, id):
-    #     data = request.json
-    #     Plant.update_by_id(id, data)
-    #     return Plant.get_by_id(id)
+    def put(self, id):
+        data = request.json
+        plant = Plant.query.get(id)
+        plant.location = data['location'] if data.get('location', False) else plant.name
+        plant.name = data['name'] if data.get('name', False) else plant.email
+
+        db.session.add(plant)
+        db.session.commit()
+        return plant.serialize
 
     def delete(self, id):
         plant = Plant.query.get(id)

@@ -8,7 +8,6 @@ from utils.helpers import convert_list
 class PlantResource(Resource):
     def get(self):
         plants = Plant.query.all()
-
         return convert_list(plants)
 
     def post(self):
@@ -23,11 +22,6 @@ class PlantSingleResource(Resource):
     def get(self, id):
         plant = Plant.query.get(id)
         return plant.serialize
-
-    # def put(self, id):
-    #     data = request.json
-    #     Plant.update_by_id(id, data)
-    #     return Plant.get_by_id(id)
 
     def delete(self, id):
         plant = Plant.query.get(id)
