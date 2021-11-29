@@ -30,6 +30,14 @@ def mock_my_salon():
     return Salon(id=1, name="Test", director_id=1, city="Kiev", address="Testovy")
 
 
+# @pytest.fixture
+# def my_menuitem():
+#     return MenuItem(
+#         name="Plant_Employee_Salon",
+#         link="menu",
+#     )
+
+
 @pytest.fixture
 def mock_get_sqlalchemy(mocker):
     mock = mocker.patch("flask_sqlalchemy._QueryProperty.__get__").return_value = mocker.Mock()
@@ -64,3 +72,20 @@ def employee_to_put():
 @pytest.fixture
 def salon_to_put():
     yield {"name": "PutTest", "city": "PutCity", "address": "PutTestovy"}
+
+
+@pytest.fixture()
+def menuitem_data():
+    yield {
+        'name': 'Plant_Employee_Salon',
+        'link': 'menu',
+        'is_active': False
+    }
+
+
+@pytest.fixture()
+def menuitem_put_data():
+    yield {
+        'name': 'Put_Plant_Employee_Salon',
+    }
+
