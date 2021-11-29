@@ -19,7 +19,8 @@ def test_employee_put(client, employee_to_put):
         value1_node = get_response.json[-1].get('id')
         response = client.put('/api/v1/employees/' + str(value1_node), json=employee_to_put)
 
-        assert "puttest@test.com" in str(response.data)
+        assert "PutTest" in str(response.data)
+        assert "PutLocation" in str(response.data)
         assert response.status_code == 200
 
 
