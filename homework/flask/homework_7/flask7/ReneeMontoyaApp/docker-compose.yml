@@ -33,7 +33,6 @@ services:
     volumes:
       - db_data:/var/lib/mysql
 
-
 networks:
   app:
     driver: bridge

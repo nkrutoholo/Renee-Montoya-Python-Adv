@@ -13,8 +13,8 @@ class MenuItemResource(Resource):
     def post(self):
         request_data = request.json
         menu_item = MenuItem(
-            name = request_data['name'],
-            link = request_data['link'],
+            name=request_data['name'],
+            link=request_data['link'],
             is_active=request_data['is_active']
         )
         db.session.add(menu_item)
@@ -31,6 +31,12 @@ class MenuItemSingleResource(Resource):
         db.session.add(menu_item)
         db.session.commit()
         return menu_item.serialize
+
+    def delete(self, id):
+        menu_item = MenuItem.query.get(id)
+        db.session.delete(menu_item)
+        db.session.commit()
+        return "", 204
 
 
 api.add_resource(MenuItemResource, '/api/v1/menu-items')

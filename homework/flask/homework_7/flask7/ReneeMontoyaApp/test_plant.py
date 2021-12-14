@@ -1,12 +1,9 @@
 from fixtures import *
-from models import Plant
 
 
-def test_plant_save(plant):
-    file = open('database/tests/test.json', 'w')
-    file.write('[]')
-    file.close()
-    Plant.file = 'tests/test.json'
-    plant.save()
-    assert 'id' in plant.get_by_id(1)
-    assert plant.name == plant.get_by_id(1)['name']
+def test_plant_single(client, mock_my_plant, mock_get_sqlalchemy):
+    mock_get_sqlalchemy.get.return_value = mock_my_plant
+    response = client.get('/api/v1/plants/100')
+
+    assert "Kiev" in str(response.data)
+    assert "Test" in str(response.data)

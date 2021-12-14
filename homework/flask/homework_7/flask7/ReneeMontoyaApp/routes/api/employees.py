@@ -16,7 +16,7 @@ class EmployeeResource(Resource):
             name=request_data['name'],
             email=request_data['email'],
             department_type=request_data['department_type'],
-            department_id = int(request_data['deparment_id']),
+            department_id=int(request_data['department_id']),
         )
         db.session.add(employee)
         db.session.commit()
