@@ -10,6 +10,7 @@ services:
       - .env
     volumes:
       - .:/application
+    command: gunicorn --bind 0.0.0.0:8080 app:app
     ports:
       - "8080:8080"
     networks:
@@ -32,6 +33,13 @@ services:
       - app
     volumes:
       - db_data:/var/lib/mysql
+
+  nginx:
+    build: ./docker/nginx
+    ports:
+      - 1337:80
+    depends_on:
+      - app
 
 networks:
   app:

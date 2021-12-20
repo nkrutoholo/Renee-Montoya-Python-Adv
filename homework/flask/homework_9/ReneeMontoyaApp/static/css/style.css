@@ -47,3 +47,12 @@ a {
 #department_id[data-type="salon"] .plant {
     display: none;
 }
+
+.alert{
+    margin-top: 20px;
+    display: inline-block;
+}
+
+.btn-group{
+    margin-top: 20px;
+}

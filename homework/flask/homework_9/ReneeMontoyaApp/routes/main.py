@@ -37,17 +37,17 @@ def plant_update(id):
 
 
 @app.route('/employee/<int:id>')
-def employee(id, error=None):
+def employee(id):
     employee = Employee.query.get(id)
-    return render_template('employee.html', employee=employee, error=error)
+    return render_template('employee.html', employee=employee)
 
 
 @app.route('/employee/<int:id>/edit')
-def employee_edit_page(id):
+def employee_edit_page(id, error=None):
     employee = Employee.query.get(id)
     plants = Plant.query.all()
     salons = Salon.query.all()
-    return render_template('edit-employee.html', plants=plants, employee=employee, salons=salons)
+    return render_template('edit-employee.html', plants=plants, employee=employee, salons=salons, error=error)
 
 
 @app.route('/employee/<int:id>/update', methods=['POST'])
@@ -60,12 +60,12 @@ def employee_update(id):
     employee.department_type = form_data.get('department_type')
     employee.department_id = form_data.get('department_id')
     if form_data.get('department_id') == None\
-            or form_data.get('department_id') == '':
+            or form_data.get('department_type') == None:
         error = 'Invalid department'
-        return redirect(url_for('employee', id=id, error=error))
+        return redirect(url_for('employee_edit_page', id=id, error=error))
     db.session.add(employee)
     db.session.commit()
-    return redirect(url_for('employee', id=id, error=error))
+    return redirect(url_for('employee', id=id))
 
 
 @app.route('/salon/<int:id>')

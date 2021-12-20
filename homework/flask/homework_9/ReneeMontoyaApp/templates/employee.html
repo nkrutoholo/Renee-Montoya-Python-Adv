@@ -24,15 +24,6 @@
             <div class="col-sm-12 text-center">
                 <a href="{{ url_for('employee_edit_page', id=employee.id) }}" class="btn btn-info">Edit</a>
             </div>
-            <br>
-            {% if error %}
-                <p><strong>Error</strong>: {{error}}</p>
-            {% endif %}
-            {% if "error" in request.url %}
-            <div class="alert alert-warning" id="emptyAlert" role="alert" style="width: 300px; margin: auto;">
-                Your department cant be empty! Please edit again!
-            </div>
-            {% endif %}
         </div>
     </div>
 </section>
