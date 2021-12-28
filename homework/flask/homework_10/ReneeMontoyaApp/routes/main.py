@@ -1,5 +1,6 @@
 from app import app, db
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, session
+from utils.helpers import encrypt_string
 from models import Plant, Employee, Salon
 
 
@@ -15,6 +16,26 @@ def main():
 def plant(id):
     plant = Plant.query.get(id)
     return render_template('plant.html', plant=plant)
+
+
+@app.route('/login')
+def login():
+     return render_template('login.html', session=session)
+
+
+@app.route('/auth', methods=['POST'])
+def auth():
+     form = request.form
+     user = Employee.query.filter(Employee.email == form['login']).filter(Employee.password == encrypt_string(form['password'])).first()
+     if user is not None:
+          session['user'] = user.serialize
+     return redirect("http://localhost:8082/")
+
+
+@app.route('/logout')
+def logout():
+    session.pop('user', None)
+    return redirect('http://localhost:8080/')
 
 
 @app.route('/plant/<int:id>/edit')
@@ -56,12 +77,12 @@ def employee_update(id):
     employee = Employee.query.get(id)
     form_data = request.form
     employee.email = form_data.get('email') if form_data.get('email') != None else employee.email
-    employee.name = form_data.get('name') if form_data.get('name') != None else employee.name
+    employee.name = form_data.get('name') if form_data.get('name') != None else employee.email
     employee.department_type = form_data.get('department_type')
     employee.department_id = form_data.get('department_id')
     if form_data.get('department_id') == None\
             or form_data.get('department_type') == None:
-        error = f'Invalid department employee.id={id}'
+        error = 'Invalid department'
         return redirect(url_for('employee_edit_page', id=id, error=error))
     db.session.add(employee)
     db.session.commit()

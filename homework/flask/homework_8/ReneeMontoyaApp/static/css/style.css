@@ -50,7 +50,8 @@ a {
 
 .alert{
     margin-top: 20px;
-    display: inline-block;
+    margin-left: 10px;
+    /*display: inline-block;*/
 }
 
 .btn-group{
