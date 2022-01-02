@@ -16,7 +16,24 @@
             <div id="formFooter">
                 <a class="underlineHover" href="#">Forgot Password?</a>
             </div>
-
+            {#    Render flash message#}
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul class=flashes>
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+            {#  END  Render flash message#}
+            <div>
+                {#   Render message with error#}
+                {% if error %}
+                    <p class=error><strong>An error occurred:</strong> {{ error }}</p>
+                {% endif %}
+                {#   END  Render message with error#}
+            </div>
         </div>
     </div>
 </section>

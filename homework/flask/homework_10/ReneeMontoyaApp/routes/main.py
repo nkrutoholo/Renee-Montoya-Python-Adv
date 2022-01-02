@@ -9,13 +9,13 @@ def main():
     plants = Plant.query.all()
     employees = Employee.query.all()
     salons = Salon.query.all()
-    return render_template('index.html', plants=plants, employees=employees, salons=salons)
+    return render_template('index.html', plants=plants, employees=employees, salons=salons, session=session)
 
 
 @app.route('/plant/<int:id>')
 def plant(id):
     plant = Plant.query.get(id)
-    return render_template('plant.html', plant=plant)
+    return render_template('plant.html', plant=plant, session=session)
 
 
 @app.route('/login')
@@ -25,11 +25,13 @@ def login():
 
 @app.route('/auth', methods=['POST'])
 def auth():
-     form = request.form
-     user = Employee.query.filter(Employee.email == form['login']).filter(Employee.password == encrypt_string(form['password'])).first()
-     if user is not None:
-          session['user'] = user.serialize
-     return redirect("http://localhost:8082/")
+    form = request.form
+    user = Employee.query.filter(Employee.email == form['login']).filter(Employee.password == encrypt_string(form['password'])).first()
+    if user is None:
+        error = "Invalid email or password"
+        return render_template('login.html', session=session, error=error)
+    session['user'] = user.serialize
+    return redirect('http://localhost:8082/')
 
 
 @app.route('/logout')
@@ -41,8 +43,11 @@ def logout():
 @app.route('/plant/<int:id>/edit')
 def plant_edit_page(id):
     plant = Plant.query.get(id)
+    if session.get('user') is None:
+        error = "Only authorized users can edit"
+        return render_template('plant.html', plant=plant, session=session, error=error)
     employees = Employee.query.all()
-    return render_template('edit-plant.html', plant=plant, employees=employees)
+    return render_template('edit-plant.html', plant=plant, employees=employees, session=session)
 
 
 @app.route('/plant/<int:id>/update', methods=['POST'])
@@ -60,15 +65,18 @@ def plant_update(id):
 @app.route('/employee/<int:id>')
 def employee(id):
     employee = Employee.query.get(id)
-    return render_template('employee.html', employee=employee)
+    return render_template('employee.html', employee=employee, session=session)
 
 
 @app.route('/employee/<int:id>/edit')
 def employee_edit_page(id, error=None):
     employee = Employee.query.get(id)
+    if session.get('user') is None:
+        error = "Only authorized users can edit"
+        return render_template('employee.html', employee=employee, error=error, ession=session)
     plants = Plant.query.all()
     salons = Salon.query.all()
-    return render_template('edit-employee.html', plants=plants, employee=employee, salons=salons, error=error)
+    return render_template('edit-employee.html', plants=plants, employee=employee, salons=salons, error=error, session=session)
 
 
 @app.route('/employee/<int:id>/update', methods=['POST'])
@@ -83,7 +91,10 @@ def employee_update(id):
     if form_data.get('department_id') == None\
             or form_data.get('department_type') == None:
         error = 'Invalid department'
-        return redirect(url_for('employee_edit_page', id=id, error=error))
+        return redirect(url_for('employee_edit_page', id=id, error=error, session=session))
+    if session.get('user') is None:
+        error = "Only authorized users can edit"
+        return render_template('employee.html', employee=employee, error=error, session=session)
     db.session.add(employee)
     db.session.commit()
     return redirect(url_for('employee', id=id))
@@ -92,4 +103,5 @@ def employee_update(id):
 @app.route('/salon/<int:id>')
 def salon(id):
     salon = Salon.query.get(id)
-    return render_template('salon.html', salon=salon)
+    return render_template('salon.html', salon=salon, session=session)
+

@@ -3,6 +3,7 @@ from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from config import Config
+# from elasticsearch import Elasticsearch
 
 db = SQLAlchemy()
 app = Flask(__name__)
